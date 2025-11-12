@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal 7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #00BCD4;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-btn, .login-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cart-btn {
+            color: #00BCD4;
+            background-color: transparent;
+            border: 1px solid #00BCD4;
+        }
+
+        .login-btn {
+            background-color: #00BCD4;
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a2f4a 0%, #2c3e50 100%);
+            border-radius: 2rem;
+            margin: 2rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-height: 100%;
+            opacity: 0.8;
+        }
+
+        .explore-btn {
+            background-color: #FFD700;
+            color: #000;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .explore-btn:hover {
+            background-color: #FFC700;
+            transform: scale(1.05);
+        }
+
+        .hero-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .dot {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background-color: #00BCD4;
+            width: 2rem;
+        }
+
+        /* Sections */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .shop-all-btn {
+            background-color: #FFD700;
+            color: #000;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .shop-all-btn:hover {
+            background-color: #FFC700;
+        }
+
+        /* New Arrivals Section */
+        .new-arrivals {
+            background-color: white;
+            padding: 2rem;
+            margin: 0 2rem;
+            border-radius: 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: #e0e0e0;
+            border-radius: 1.5rem;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        /* Performance Section */
+        .performance-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem;
+            margin-top: 3rem;
+        }
+
+        .perf-text {
+            background: linear-gradient(135deg, #00BCD4 0%, #00E676 100%);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+        }
+
+        .perf-text p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .perf-image {
+            background-color: #2c3e50;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .perf-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Category Section */
+        .category-section {
+            background-color: white;
+            padding: 2rem;
+            margin: 2rem;
+            border-radius: 1rem;
+        }
+
+        .category-carousel {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .carousel-arrow.left {
+            left: -1rem;
+        }
+
+        .carousel-arrow.right {
+            right: -1rem;
+        }
+
+        /* Challenge Section */
+        .challenge-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem;
+            align-items: center;
+        }
+
+        .challenge-image {
+            background-color: #2c3e50;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .challenge-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .challenge-text {
+            background-color: #0090D9;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            color: white;
+        }
+
+        .challenge-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .challenge-text p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00BCD4;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 2rem;
+            height: 2rem;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+        }
+
+        .social-icon:hover {
+            background-color: #00BCD4;
+            color: white;
+        }
+
+        /* Sticky Mobile Button */
+        .mobile-sticky-btn {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #00BCD4;
+            color: white;
+            padding: 1rem;
+            border: none;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 99;
+            border-radius: 0;
+        }
+
+        .mobile-sticky-btn:active {
+            background-color: #0099a1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .category-carousel {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-right {
+                gap: 0.5rem;
+            }
+
+            .cart-btn, .login-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                margin: 1rem;
+                padding: 2rem 1rem;
+                border-radius: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .new-arrivals, .category-section, .challenge-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .performance-section {
+                grid-template-columns: 1fr;
+                margin: 1rem;
+                gap: 1.5rem;
+            }
+
+            .perf-text {
+                padding: 2rem;
+            }
+
+            .category-carousel {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .challenge-section {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-image {
+                order: 2;
+            }
+
+            .challenge-text {
+                order: 1;
+                padding: 1.5rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .mobile-sticky-btn {
+                display: block;
+            }
+
+            body {
+                padding-bottom: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .category-carousel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .new-arrivals, .category-section {
+                margin: 0.8rem;
+                padding: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .product-name {
+                font-size: 0.85rem;
+            }
+
+            .product-price {
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .perf-text p, .challenge-text p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .mobile-sticky-btn {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            body {
+                padding-bottom: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Deal 7</div>
+        <nav>
+            <a href="#" class="active">🏠</a>
+            <a href="#">Activewear</a>
+            <a href="#">Women</a>
+            <a href="#">Men</a>
+            <a href="#">Kids</a>
+            <a href="#">Stationery</a>
+        </nav>
+        <div class="nav-right">
+            <button class="cart-btn">🛒 My Cart</button>
+            <button class="login-btn">Login or Register</button>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>NEW COLLECTION</h1>
+            <button class="explore-btn">Explore</button>
+            <div class="hero-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <img src="/Hero.png" alt="New Collection" class="hero-image">
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals">
+        <div class="section-header">
+            <h2>New Arrivals</h2>
+            <button class="shop-all-btn">Shop All</button>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="/Men's Sweater.jpg" alt="Men's Sweatshirt - Green Ash" class="product-image">
+                <div class="product-name">Men's Sweatshirt - Green Ash</div>
+                <div class="product-price">AED 410.00</div>
+            </div>
+            <div class="product-card">
+                <img src="/Women's Hoodie.jpg" alt="Women's Hoodie - Pale Banana" class="product-image">
+                <div class="product-name">Women's Hoodie - Pale Banana</div>
+                <div class="product-price">AED 625.00</div>
+            </div>
+            <div class="product-card">
+                <img src="/Men's Hoodie.jpg" alt="Men's Hoodie - Papaya Punch" class="product-image">
+                <div class="product-name">Men's Hoodie - Papaya Punch</div>
+                <div class="product-price">AED 625.00</div>
+            </div>
+            <div class="product-card">
+                <img src="/Boy's Sweatshirt.jpg" alt="Boy's Sweatshirt - Blue Atoll" class="product-image">
+                <div class="product-name">Boy's Sweatshirt - Blue Atoll</div>
+                <div class="product-price">AED 355.00</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section class="performance-section">
+        <div class="perf-text">
+            <p>Performance meets effortless elegance in the Fitness Challenge Collection for Women. Designed to sculpt, support, and inspire, each piece is engineered to transition seamlessly from the gym to your everyday lifestyle.</p>
+            <button class="explore-btn">Explore</button>
+        </div>
+        <div class="perf-image">
+            <img src="/About.png" alt="Performance Collection">
+        </div>
+    </section>
+
+    <!-- Category Section -->
+    <section class="category-section">
+        <div class="section-header">
+            <h2>Category</h2>
+            <button class="shop-all-btn">Shop All</button>
+        </div>
+        <div class="category-carousel">
+            <div class="category-card">
+                <img src="/Category.jpg" alt="Dubai Fitness Challenge">
+                <div class="category-label">Dubai Fitness Challenge</div>
+            </div>
+            <div class="category-card">
+                <img src="/C1.png" alt="Women">
+                <div class="category-label">Women</div>
+            </div>
+            <div class="category-card">
+                <img src="/C2.png" alt="Men">
+                <div class="category-label">Men</div>
+            </div>
+            <div class="category-card">
+                <img src="/C3.png" alt="Kids">
+                <div class="category-label">Kids</div>
+            </div>
+            <div class="category-card">
+                <img src="/C4.webp" alt="Stationery">
+                <div class="category-label">Stationery</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge Section -->
+    <section class="challenge-section">
+        <div class="challenge-image">
+            <img src="/About2.png" alt="Fitness Challenge">
+        </div>
+        <div class="challenge-text">
+            <h3>Fitness Challenge</h3>
+            <p>Our Fitness Challenge Activewear celebrates motion, mindset, and motivation. Built for every rep, every step, and every goal, this collection keeps you motivated, stronger every day. Train hard, stay inspired, and keep moving forward.</p>
+            <button class="explore-btn">Explore</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">Deal 7</div>
+        <div class="footer-links">
+            <a href="#">Terms of Use</a>
+            <a href="#">Terms of Sale</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="social-icons">
+            <div class="social-icon">📘</div>
+            <div class="social-icon">📷</div>
+            <div class="social-icon">𝕏</div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile Button -->
+    <button class="mobile-sticky-btn">Add to Cart</button>
+</body>
+</html>
